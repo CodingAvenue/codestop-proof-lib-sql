@@ -1,0 +1,13 @@
+{
+    "name": "codingavenue/sql-proof",
+    "description": "SQL Proof Library for CodeStop SQL Course",
+    "type": "library",
+    "license": "ISC",
+    "authors": [
+        {
+            "name": "Jerome Suarez",
+            "email": "jerome.suarez@codingavenue.com"
+        }
+    ],
+    "require": {}
+}
