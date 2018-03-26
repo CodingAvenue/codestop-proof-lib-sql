@@ -34,7 +34,7 @@ class SQLTest extends TestCase
 
         $sql = new SQL();
 
-        $response = $sql->query();
+        $response = $sql->execute();
 
         $this->assertInstanceOf(Response::class, $response, "\$response is an instance of the Response class");
 

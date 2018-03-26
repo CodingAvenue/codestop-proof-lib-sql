@@ -56,7 +56,7 @@ class SQL
         return $this->config;
     }
 
-    public function query($sqlQuery = null)
+    public function execute($sqlQuery = null)
     {
         if (is_null($sqlQuery)) {
             $sqlQuery = $this->query;
