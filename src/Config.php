@@ -43,25 +43,9 @@ class Config
     protected function getDefaultConfiguration()
     {
         return [
-            "dbname"    => "",
-            "user"      => "",
-            "password"  => "",
-            "host"      => "localhost",
-            "driver"    => "pdo_pgsql",
             "binPath"   => "vendor/bin",
-            "queryFilePath" => "/code"
+            "queryFilePath" => "./code"
         ];
-    }
-
-    public function getDbConn()
-    {
-        return array(
-            "dbname"    => $this->config['dbname'],
-            "user"      => $this->config['user'],
-            "password"  => $this->config['password'],
-            "host"      => $this->config['host'],
-            "driver"    => $this->config['driver']
-        );
     }
 
     public function getQueryFilePath()
@@ -72,30 +56,5 @@ class Config
     public function getBinPath()
     {
         return $this->config['binPath'];
-    }
-
-    public function getDBName()
-    {
-        return $this->config['dbname'];
-    }
-
-    public function getUser()
-    {
-        return $this->config['user'];
-    }
-
-    public function getPassword()
-    {
-        return $this->config['password'];
-    }
-
-    public function getHost()
-    {
-        return $this->config['host'];
-    }
-
-    public function getDriver()
-    {
-        return $this->config['driver'];
     }
 }

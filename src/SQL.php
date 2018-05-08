@@ -4,6 +4,8 @@ namespace CodingAvenue\Proof;
 
 use CodingAvenue\Proof\Config;
 use CodingAvenue\Proof\BinFinder;
+use CodingAvenue\Proof\SQL\Finder;
+use PHPSQLParser\PHPSQLParser;
 use CodingAvenue\Proof\SQL\Response;
 use CodingAvenue\Proof\SQL\ResponseError;
 
@@ -17,21 +19,18 @@ class SQL
     /** @var Config $config the Config instance */
     private $config;
 
-    /** @var DBAL $conn the database connection*/
-    private $conn;
-
-    /** @var string $query the query to be executed. */
+    /** @var String $query the sql query string */
     private $query;
 
     /** @var BinFinder $binFinder the BinFinder instance */
     private $binFinder;
 
+    /** @var Finder $finder the SQL Finder instance */
+    private $finder;
+
     public function __construct()
     {
         $this->config = new Config();
-        $config = new \Doctrine\DBAL\Configuration();
-
-        $this->conn = \Doctrine\DBAL\DriverManager::getConnection($this->config->getDbConn(), $config);
 
         if (!file_exists($this->getQueryPath())) {
             throw new \Exception("Answer file {$this->getQueryPath()} not found.");
@@ -44,11 +43,18 @@ class SQL
 
         $this->query = $query;
         $this->binFinder = new BinFinder($this->config);
+
+        $this->finder = new Finder($this->query);
     }
 
     protected function getQueryPath()
     {
         return $this->config->getQueryFilePath();
+    }
+
+    public function find(string $selector)
+    {
+        return $this->finder->find($selector);
     }
 
     public function getConfig()
