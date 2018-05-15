@@ -55,6 +55,6 @@ class Where
             throw new \Exception("Invalid WHERE parts found.");
         }
 
-        return $normalize
+        return $normalize;
     }
 }
