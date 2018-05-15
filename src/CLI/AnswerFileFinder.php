@@ -43,7 +43,7 @@ class AnswerFileFinder
         $separator = DIRECTORY_SEPARATOR;
 
         $pathParts = pathinfo($testFile);
-        $testFile = join($separator, array($pathParts['dirname'], $pathParts['filename'] . ".sql");
+        $testFile = join($separator, array($pathParts['dirname'], $pathParts['filename'] . ".sql"));
 
         $answerPath = str_replace("{$this->baseProofDir}{$separator}", '', $testFile);
 
