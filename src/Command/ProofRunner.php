@@ -52,9 +52,9 @@ class ProofRunner extends Command
                 $answerFile = $answerFileFinder->resolve($file);
 
                 $output->writeln("Using test file {$answerFile} for this test as code input.", OutputInterface::VERBOSITY_VERBOSE);
-                $output->writeln("Copying content to {$config->getCodeFilePath()}", OutputInterface::VERBOSITY_VERBOSE);
+                $output->writeln("Copying content to {$config->getQueryFilePath()}", OutputInterface::VERBOSITY_VERBOSE);
 
-                $fileHandler = fopen($config->getCodeFilePath(), 'w');
+                $fileHandler = fopen($config->getQueryFilePath(), 'w');
                 fwrite($fileHandler, file_get_contents($answerFile));
 
                 $output->writeln("Copy completed.", OutputInterface::VERBOSITY_VERBOSE);

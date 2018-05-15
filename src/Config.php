@@ -30,13 +30,13 @@ class Config
             $config = json_decode(file_get_contents($configFile), true);
             $config = array_merge($this->getDefaultConfiguration(), $config);
 
-            $this->config = $config;
+            $this->config = $this->loadConfiguration($config);
             $this->defaultConfiguration = false;
         }
         else {
             $config = $this->getDefaultConfiguration();
 
-            $this->config = $config;
+            $this->config = $this->loadConfiguration($config);
             $this->defaultConfiguration = true;
         }
     }
@@ -49,8 +49,21 @@ class Config
     {
         return [
             "binPath"   => "vendor/bin",
-            "queryFilePath" => "/code"
+            "queryFilePath" => "/code",
+            "answerDir" => "",
+            "proofDir" => ""
         ];
+    }
+
+    public function loadConfiguration($config)
+    {
+        $default = $this->getDefaultConfiguration();
+
+        $config['queryFilePath'] = $this->sandboxMode ? $default['queryFilePath'] : $config['queryFilePath'];
+        $config['answerDir'] = $this->sandboxMode ? $default['answerDir'] : $config['answerDir'];
+        $config['proofDir'] = $this->sandboxMode ? $default['proofDir'] : $config['proofDir'];
+
+        return $config;
     }
 
     public function getQueryFilePath()
@@ -66,5 +79,15 @@ class Config
     public function isDefaultConfiguration()
     {
         return $this->defaultConfiguration;
+    }
+
+    public function getAnswerDir()
+    {
+        return $this->config['answerDir'];
+    }
+
+    public function getProofDir()
+    {
+        return $this->config['proofDir'];
     }
 }
