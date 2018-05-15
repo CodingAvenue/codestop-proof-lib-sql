@@ -41,6 +41,10 @@ class AnswerFileFinder
 
         // This should remove the double // on the resulting path.
         $separator = DIRECTORY_SEPARATOR;
+
+        $pathParts = pathinfo($testFile);
+        $testFile = join($separator, array($pathParts['dirname'], $pathParts['filename'] . ".sql");
+
         $answerPath = str_replace("{$this->baseProofDir}{$separator}", '', $testFile);
 
         $answerFile = join($separator, array($this->baseAnswerDir, $answerPath));
