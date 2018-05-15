@@ -15,7 +15,7 @@ class Config
     private $sandboxMode;
 
     /** @var bool $defaultConfiguration flag if the config instance is using the default configuration. */
-    private $defaultConfiguration
+    private $defaultConfiguration;
 
     /**
      * Constructor - loads the configuration file (proof.json).
