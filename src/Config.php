@@ -14,6 +14,9 @@ class Config
     /** @var bool $sandboxMode determine if we're running inside the sandbox. This would skip proof.json if we're inside the sandbox */
     private $sandboxMode;
 
+    /** @var bool $defaultConfiguration flag if the config instance is using the default configuration. */
+    private $defaultConfiguration
+
     /**
      * Constructor - loads the configuration file (proof.json).
      */
@@ -28,11 +31,13 @@ class Config
             $config = array_merge($this->getDefaultConfiguration(), $config);
 
             $this->config = $config;
+            $this->defaultConfiguration = false;
         }
         else {
             $config = $this->getDefaultConfiguration();
 
             $this->config = $config;
+            $this->defaultConfiguration = true;
         }
     }
 
@@ -56,5 +61,10 @@ class Config
     public function getBinPath()
     {
         return $this->config['binPath'];
+    }
+
+    public function isDefaultConfiguration()
+    {
+        return $this->defaultConfiguration;
     }
 }
