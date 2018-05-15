@@ -15,7 +15,6 @@
         }
     },
     "require": {
-        "doctrine/dbal": "^2.5",
         "symfony/console": "^3.4",
         "greenlion/php-sql-parser": "^4.1"
     },

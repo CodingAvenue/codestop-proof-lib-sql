@@ -31,37 +31,42 @@ Create a `proof.json` file on your Course root directory. Below are the supporte
 
 ## Usage
 
+### Loading
+
 ```php
 use CodingAvenue\Proof\SQL;
 
 $sql = new SQL();
-
-$response = $sql->query();
-
-if (get_class($response) === 'Response') { // $response is an instance of Response class
-    // Check if the result is empty
-    $response->isEmpty();
-
-    // Returns the number of columns in the result.
-    $response->getColumnCount(); 
-
-    // Returns the column names on the result.
-    $response->getColumnNames(); 
-
-    // returns the number of rows on the result;
-    $response->getRowCount(); 
-
-    // Checks if a column $columnName exists on the result;
-    $response->columnExists($columnName); 
-} else { // $response is an instance of ResponseError. We have an SQL error
-    $response->getMessage(); // Is the SQL Error.
-}
 ```
 
-### Running locally
+### SELECT keyword
 
-This library includes a proof-runner executable that would allow authors to run their proof files locally. From your root directory
+```php
+$sql->find("SELECT");
 
+// Finding if the SELECT keyword specifies a specific column or a *
+
+$sql->find("SELECT[columns='*']");
+$sql->find("SELECT[columns='foo']");
 ```
-./vendor/bin/proof-runner </path/to/your/proof/file.php>
+
+### WHERE keyword
+
+```php
+$sql->find("WHERE");
+
+// Finding WHERE keyword with specific filter
+
+$sql->find("WHERE[columns='foo', operator='=', value='bar']"); // Will match WHERE foo = 'bar'
+```
+
+### FROM keyword
+
+```php
+
+$sql->find("FROM");
+
+// Finding FROM keyword with specific table
+
+$sql->find("FROM[table='foo']");
 ```

@@ -44,7 +44,7 @@ class Config
     {
         return [
             "binPath"   => "vendor/bin",
-            "queryFilePath" => "./code"
+            "queryFilePath" => "/code"
         ];
     }
 

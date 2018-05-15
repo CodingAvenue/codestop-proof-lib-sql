@@ -73,10 +73,10 @@ class BinFinder
     }
 
     /**
-     * Returns the EvalRunner binary
+     * Returns the ProofRunner binary
      */
-    public function getEvalRunner()
+    public function getProofRunner()
     {
-        return $this->getBin("eval-runner");
+        return $this->getBin("proof-runner");
     }
 }
