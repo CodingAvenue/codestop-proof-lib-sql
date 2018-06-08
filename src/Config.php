@@ -8,86 +8,19 @@ namespace CodingAvenue\Proof;
 
 class Config
 {
-    /** @var dbconn the database connection parameters */
-    private $config;
-
-    /** @var bool $sandboxMode determine if we're running inside the sandbox. This would skip proof.json if we're inside the sandbox */
-    private $sandboxMode;
-
-    /** @var bool $defaultConfiguration flag if the config instance is using the default configuration. */
-    private $defaultConfiguration;
+    /** @var String $binPath the binary path of the course */
+    private $binPath;
 
     /**
      * Constructor - loads the configuration file (proof.json).
      */
     public function __construct()
     {
-        $configFile = realpath('proof.json') ?: null;
-
-        $this->sandboxMode = getenv("PROOF_LIBRARY_MODE") === 'local' ? false : true;
-
-        if ($configFile && file_exists($configFile)) {
-            $config = json_decode(file_get_contents($configFile), true);
-            $config = array_merge($this->getDefaultConfiguration(), $config);
-
-            $this->config = $this->loadConfiguration($config);
-            $this->defaultConfiguration = false;
-        }
-        else {
-            $config = $this->getDefaultConfiguration();
-
-            $this->config = $this->loadConfiguration($config);
-            $this->defaultConfiguration = true;
-        }
-    }
-
-    /**
-     * We need to set this to make sure that when we run the proof file on the sandbox server ( live instance ), it would ignore the proof.json file
-     * which is just for local testing.
-     */
-    protected function getDefaultConfiguration()
-    {
-        return [
-            "binPath"   => "vendor/bin",
-            "queryFilePath" => "/code",
-            "answerDir" => "",
-            "proofDir" => ""
-        ];
-    }
-
-    public function loadConfiguration($config)
-    {
-        $default = $this->getDefaultConfiguration();
-
-        $config['queryFilePath'] = $this->sandboxMode ? $default['queryFilePath'] : $config['queryFilePath'];
-        $config['answerDir'] = $this->sandboxMode ? $default['answerDir'] : $config['answerDir'];
-        $config['proofDir'] = $this->sandboxMode ? $default['proofDir'] : $config['proofDir'];
-
-        return $config;
-    }
-
-    public function getQueryFilePath()
-    {
-        return $this->config['queryFilePath'];
+        $this->binPath = 'vendor/bin';
     }
 
     public function getBinPath()
     {
-        return $this->config['binPath'];
-    }
-
-    public function isDefaultConfiguration()
-    {
-        return $this->defaultConfiguration;
-    }
-
-    public function getAnswerDir()
-    {
-        return $this->config['answerDir'];
-    }
-
-    public function getProofDir()
-    {
-        return $this->config['proofDir'];
+        return $this->binPath;
     }
 }

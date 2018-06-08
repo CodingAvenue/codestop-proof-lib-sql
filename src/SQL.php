@@ -5,9 +5,6 @@ namespace CodingAvenue\Proof;
 use CodingAvenue\Proof\Config;
 use CodingAvenue\Proof\BinFinder;
 use CodingAvenue\Proof\SQL\Finder;
-use PHPSQLParser\PHPSQLParser;
-use CodingAvenue\Proof\SQL\Response;
-use CodingAvenue\Proof\SQL\ResponseError;
 
 /**
  * SQL class of the Proof Library
@@ -19,67 +16,48 @@ class SQL
     /** @var Config $config the Config instance */
     private $config;
 
-    /** @var String $query the sql query string */
-    private $query;
-
     /** @var BinFinder $binFinder the BinFinder instance */
     private $binFinder;
 
     /** @var Finder $finder the SQL Finder instance */
     private $finder;
 
-    public function __construct()
+    public function __construct(string $answerFile)
     {
         $this->config = new Config();
 
-        if (!file_exists($this->getQueryPath())) {
-            throw new \Exception("Answer file {$this->getQueryPath()} not found.");
+        if (!file_exists($answerFile)) {
+            throw new \Exception("Answer file {$answerFile} not found.");
         }
 
-        $query = file_get_contents($this->getQueryPath());
+        $query = file_get_contents($answerFil);
         if (!$query) {
-            throw new \Exception("Unable to read answer file {$this->getQueryPath()}.");
+            throw new \Exception("Unable to read answer file {$answerFile}.");
         }
 
-        $this->query = $query;
+        $this->finder = new Finder($query);
+
         $this->binFinder = new BinFinder($this->config);
-
-        $this->finder = new Finder($this->query);
     }
 
-    protected function getQueryPath()
-    {
-        return $this->config->getQueryFilePath();
-    }
-
-    public function find(string $selector)
+    /**
+     * Calls the Finder class find() method to filter the nodes
+     * based on the selector.
+     * 
+     * @param String $selector the Selector that will be used to filter the node
+     * @return Array the array of nodes after the filter has been applied.
+     * if no nodes are found, it will return an empty array. 
+     */
+    public function find(string $selector): array
     {
         return $this->finder->find($selector);
     }
 
+    /**
+     * Returns the Config instance of this class.
+     */
     public function getConfig()
     {
         return $this->config;
-    }
-
-    public function execute($sqlQuery = null)
-    {
-        if (is_null($sqlQuery)) {
-            $sqlQuery = $this->query;
-        }
-
-        $stmt = '';
-
-        try {
-            $stmt = $this->conn->executeQuery($sqlQuery);
-            
-            return new Response($stmt->fetch(), $stmt);
-        } catch (\Doctrine\DBAL\DBALException $e) {
-            // Need to get the RAW SQL error message and not the DBAL/PDO error.
-            $pre = $e->getPrevious()->getPrevious();
-
-            // errorInfo has the error string that is close to what the DB server is gives us.
-            return new ResponseError($pre->errorInfo[2], $stmt);
-        }
     }
 }

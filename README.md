@@ -17,18 +17,6 @@ Add the following to your `composer.json` file
 ```
 Then do `composer update`
 
-## Local setup Configuration
-
-Create a `proof.json` file on your Course root directory. Below are the supported configuration
-
- - **dbname** - name of the database to connect to
- - **user** - username that will be used to connect to the DB
- - **password** - password that will be used to connect to the DB
- - **host** - The host of the database, default to localhost
- - **driver** - The DB driver to use, default to pdo_pgsql
- - **queryFilePath** - The path to the file where the query to be executed is saved. Default to /code
- - **binPath** - The path of the bin directory. Default to vendor/bin
-
 ## Usage
 
 ### Loading
@@ -36,7 +24,8 @@ Create a `proof.json` file on your Course root directory. Below are the supporte
 ```php
 use CodingAvenue\Proof\SQL;
 
-$sql = new SQL();
+global $code; // This was set by the database API
+$sql = new SQL($code);
 ```
 
 ### SELECT keyword

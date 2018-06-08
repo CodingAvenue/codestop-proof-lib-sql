@@ -10,38 +10,15 @@ use CodingAvenue\Proof\Config;
  */
 class BinFinder
 {
+    /** @var Config $config the Proof Config instance */
+    private $config;
+
     /** @var String $binPath the path to the vendor's bin directory of this installation */ 
     private $binPath;
 
     public function __construct(Config $config)
     {
-        if (is_null($config->getBinPath())) {
-            // Default bin installation
-            $this->binPath = $this->getDefaultBinPath();
-        }
-        else {
-            if (!file_exists(realpath($config->getBinPath()))) {
-                throw new \Exception("Bin path {$config->getBinPath()} does not exists. Please set the correct path.");
-                $this->binPath = realpath($config->getBinPath());
-            }
-            
-            $this->binPath = realpath($config->getBinPath());
-        }
-    }
-
-    /**
-     * Returns the default path for bin directory 
-     */
-    public function getDefaultBinPath()
-    {
-        if (file_exists(implode(DIRECTORY_SEPARATOR, array(__DIR__, "..", "..", "..", "bin")))) {
-            // proof-library is part of a composer installation.
-            // bin directory from the src directory is at ../../../bin if we're part of a composer installation
-            return implode(DIRECTORY_SEPARATOR, array(__DIR__, "..", "..", "..", "bin"));
-        }
-
-        // If we're not part of a composer installation then the vendor bin path at ../vendor/bin
-        return implode(DIRECTORY_SEPARATOR, array(__DIR__, "..", "vendor", "bin"));
+        $this->config = $config;
     }
 
     /**
@@ -52,7 +29,7 @@ class BinFinder
      */
     public function getBin(string $bin)
     {
-        $binary = implode(DIRECTORY_SEPARATOR, array($this->binPath, $bin));
+        $binary = implode(DIRECTORY_SEPARATOR, array($this->config->getBinPath(), $bin));
         if (file_exists($binary)) {
             return $binary;
         }
