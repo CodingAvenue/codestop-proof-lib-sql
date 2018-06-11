@@ -44,31 +44,48 @@ class ProofRunner extends Command
         $output->writeln("Preparing files to be executed by phpunit", OutputInterface::VERBOSITY_VERBOSE);
 
         foreach ($files as $file) {
-            if (!$config->isDefaultConfiguration()) {
-                $output->writeln("Preparing file {$file}", OutputInterface::VERBOSITY_VERBOSE);
-                $output->writeln("Resolving test file code to be used on this test.", OutputInterface::VERBOSITY_VERBOSE);
+            $output->writeln("Preparing file {$file}", OutputInterface::VERBOSITY_VERBOSE);
+            $output->writeln("Resolving test file code to be used on this test.", OutputInterface::VERBOSITY_VERBOSE);
 
-                $answerFileFinder = new AnswerFileFinder($config->getAnswerDir(), $config->getProofDir());
-                $answerFile = $answerFileFinder->resolve($file);
+            $answerFileFinder = new AnswerFileFinder();
+            $answerFile = $answerFileFinder->resolve($file);
 
-                $output->writeln("Using test file {$answerFile} for this test as code input.", OutputInterface::VERBOSITY_VERBOSE);
-                $output->writeln("Copying content to {$config->getQueryFilePath()}", OutputInterface::VERBOSITY_VERBOSE);
+            $output->writeln("Using test file {$answerFile} for this test as code input.", OutputInterface::VERBOSITY_VERBOSE);
+            $output->writeln("Copying content to ./code", OutputInterface::VERBOSITY_VERBOSE);
 
-                $fileHandler = fopen($config->getQueryFilePath(), 'w');
-                fwrite($fileHandler, file_get_contents($answerFile));
+            $queryFile = getcwd() . "/code";
 
-                $output->writeln("Copy completed.", OutputInterface::VERBOSITY_VERBOSE);
-            }
+            $fileHandler = fopen($queryFile, 'w');
+            fwrite($fileHandler, file_get_contents($answerFile));
+            fclose($fileHandler);
+
+            $output->writeln("Copy completed.", OutputInterface::VERBOSITY_VERBOSE);
+            $output->writeln("Preparing bootstrap file", OutputInterface::VERBOSITY_VERBOSE);
+
+            $bootstrapFile = "bootstrap.php";
+
+            $boot = <<<EOF
+<?php
+\$code = '$queryFile';
+\$id = 'testId';
+EOF;
+
+            $bootHandler = fopen($bootstrapFile, 'w');
+            fwrite($bootHandler, $boot);
+            fclose($bootHandler);
 
             $out = array();
             $phpUnit = $binFinder->getPHPUnit();
             $output->writeln("Running command `{$phpUnit} --verbose --tap {$file}`", OutputInterface::VERBOSITY_VERBOSE);
 
-            exec("{$phpUnit} --verbose --tap {$file}", $out);
+            exec("{$phpUnit} --verbose --bootstrap {$bootstrapFile} --tap {$file}", $out);
 
             foreach ($out as $line) {
                 $output->writeln($line);
             }
+
+            unlink($queryFile);
+            unlink($bootstrapFile);
         }
     }
 }

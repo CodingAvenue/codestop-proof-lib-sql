@@ -30,7 +30,7 @@ class SQL
             throw new \Exception("Answer file {$answerFile} not found.");
         }
 
-        $query = file_get_contents($answerFil);
+        $query = file_get_contents($answerFile);
         if (!$query) {
             throw new \Exception("Unable to read answer file {$answerFile}.");
         }
