@@ -22,6 +22,8 @@ class SQL
     /** @var Finder $finder the SQL Finder instance */
     private $finder;
 
+    private $query;
+
     public function __construct(string $answerFile)
     {
         $this->config = new Config();
@@ -34,6 +36,8 @@ class SQL
         if (!$query) {
             throw new \Exception("Unable to read answer file {$answerFile}.");
         }
+
+        $this->query = $query;
 
         $this->finder = new Finder($query);
 
@@ -59,5 +63,10 @@ class SQL
     public function getConfig()
     {
         return $this->config;
+    }
+
+    public function getQuery()
+    {
+        return $this->query;
     }
 }

@@ -55,10 +55,10 @@ class ProvisionIdFinder
         $questionId = '';
         foreach ($contents as $line_num => $line) {
             if (preg_match("/^\/\/\//", $line)) { // It's an annotation line
-                if (preg_match("/answer=\[$testFile\]/", $line)) {
-                    preg_match("/id=(\w+-\w+-\w+-\w+-\w+/", $line, $match);
+                if (strpos($line, $testFile)) {
+                    preg_match("/id=(\w+-\w+-\w+-\w+-\w+)/", $line, $match);
 
-                    $questionId = $match[0];
+                    $questionId = $match[1];
                 }
             }
         }
