@@ -11,6 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use CodingAvenue\Proof\BinFinder;
 use CodingAvenue\Proof\Config;
 use CodingAvenue\Proof\CLI\AnswerFileFinder;
+use CodingAvenue\Proof\CLI\ProvisionIdFinder;
 
 class ProofRunner extends Command
 {
@@ -59,6 +60,9 @@ class ProofRunner extends Command
             fwrite($fileHandler, file_get_contents($answerFile));
             fclose($fileHandler);
 
+            $provisionFinder = new ProvisionIdFinder();
+            $databaseId = $provisionFinder->resolve($file);
+
             $output->writeln("Copy completed.", OutputInterface::VERBOSITY_VERBOSE);
             $output->writeln("Preparing bootstrap file", OutputInterface::VERBOSITY_VERBOSE);
 
@@ -67,7 +71,7 @@ class ProofRunner extends Command
             $boot = <<<EOF
 <?php
 \$code = '$queryFile';
-\$id = 'testId';
+\$id = '$databaseId';
 EOF;
 
             $bootHandler = fopen($bootstrapFile, 'w');
