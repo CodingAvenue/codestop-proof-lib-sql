@@ -1,0 +1,30 @@
+{
+    "name": "codingavenue/php-proof",
+    "description": "Reusable functions",
+    "authors": [
+        {
+            "name": "Sandae Macalalag",
+            "email": "sandaemc@gmail.com"
+        },
+        {
+            "name": "Jerome Suarez",
+            "email": "jerome.suarez@codingavenue.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "CodingAvenue\\Proof\\": "src/"
+        }
+    },
+    "require": {
+        "nikic/php-parser": "^3.0.5",
+        "squizlabs/php_codesniffer": "2.*",
+        "phpmd/phpmd" : "@stable",
+        "symfony/console": "^3.2",
+        "symfony/process": "^3.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.1"
+    },
+    "bin": ["src/bin/proof-runner", "src/bin/eval-runner"]
+}   

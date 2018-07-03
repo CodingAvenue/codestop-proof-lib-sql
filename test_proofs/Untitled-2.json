@@ -1,0 +1,25 @@
+
+use CodingAvenue\Proof\SQL;
+
+$sql = new SQL();
+
+$response = $sql->query();
+
+if (get_class($response) === 'Response') { // $response is an instance of Response class
+    // Check if the result is empty
+    $response->isEmpty();
+
+    // Returns the number of columns in the result.
+    $response->getColumnCount(); 
+
+    // Returns the column names on the result.
+    $response->getColumnNames(); 
+
+    // returns the number of rows on the result;
+    $response->getRowCount(); 
+
+    // Checks if a column $columnName exists on the result;
+    $response->columnExists($columnName); 
+} else { // $response is an instance of ResponseError. We have an SQL error
+    $response->getMessage(); // Is the SQL Error.
+}

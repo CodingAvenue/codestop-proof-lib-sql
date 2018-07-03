@@ -1,0 +1,36 @@
+{
+    "name": "codingavenue/sql-proof",
+    "description": "SQL Proof Library for CodeStop SQL Course",
+    "type": "library",
+    "license": "ISC",
+    "authors": [
+        {
+            "name": "Jerome Suarez",
+            "email": "jerome.suarez@codingavenue.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "CodingAvenue\\Proof\\": "src/"
+        }
+    },
+    "require": {
+        "doctrine/dbal": "^2.5",
+        "symfony/console": "^3.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.5"
+    },
+    "bin": ["src/bin/proof-runner"]
+}
+
+{
+    "repositories": {
+        "type": "git",
+        "url": "https://github.com/CodingAvenue/codestop-proof-library-sql"
+    },
+    "require": {
+        "codingavenue/sql-proof": "~0.1"
+    }
+}
+

@@ -1,0 +1,8 @@
+create:
+Local setup Configuration
+    dbname - name of the database to connect to
+    user - username that will be used to connect to the DB
+    password - password that will be used to connect to the DB
+
+
+
