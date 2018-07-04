@@ -4,6 +4,7 @@ namespace CodingAvenue\Proof;
 
 /**
  * Configuration class used by the Sql class.
+ * TODO - We don't need this class anymore.
  */
 
 class Config

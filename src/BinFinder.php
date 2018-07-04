@@ -29,7 +29,7 @@ class BinFinder
      */
     public function getBin(string $bin)
     {
-        $binary = implode(DIRECTORY_SEPARATOR, array($this->config->getBinPath(), $bin));
+        $binary = implode(DIRECTORY_SEPARATOR, array("vendor", "bin", $bin));
         if (file_exists($binary)) {
             return $binary;
         }
