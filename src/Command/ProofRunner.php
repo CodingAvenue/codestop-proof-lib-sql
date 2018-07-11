@@ -66,7 +66,7 @@ class ProofRunner extends Command
             $output->writeln("Copy completed.", OutputInterface::VERBOSITY_VERBOSE);
             $output->writeln("Preparing bootstrap file", OutputInterface::VERBOSITY_VERBOSE);
 
-            $bootstrapFile = "bootstrap.php";
+            $bootstrapFile = "./bootstrap.php";
 
             $boot = <<<EOF
 <?php
