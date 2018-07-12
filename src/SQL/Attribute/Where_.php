@@ -19,7 +19,7 @@ class Where_
 
         $column = $attributes['columns'][0];
         $operator = $attributes['operator'][0];
-        $value = $attributes['value'][0];
+        $value = strtolower($attributes['value'][0]);
 
         while ($ctr < count($this->attributes)) {
             $attribute = $this->attributes[$ctr];
@@ -27,16 +27,37 @@ class Where_
             if ($attribute['expr_type'] == 'colref' && $attribute['base_expr'] == $column) {
                 $found[] = $attribute;
                 $ctr++;
-                $attribute = $this->attributes[$ctr];
-                if ($attribute['expr_type'] == 'operator' && $attribute['base_expr'] == $operator) {
-                    $found[] = $attribute;
-                    $ctr++;
+
+                $temp_operators = [];
+                while($ctr < count($this->attributes)) { // Searching for an operator may need one or more attributes.
                     $attribute = $this->attributes[$ctr];
-                    if ($attribute['expr_type'] == 'const' && preg_match("/^('|\")$value('|\")$/", $attribute['base_expr'])) {
-                        $found[] = $attribute;
-                        break;
+
+                    if ($attribute['expr_type'] == 'operator') {
+                        $temp_operators[] = $attribute;
+                        $ctr++;
+                        continue;
+                    }
+
+                    break;
+                }
+                if (count($temp_operators) > 0) {
+                    $ops = array_map(function($att) {
+                        return strtolower($att['base_expr']);
+                    }, $temp_operators);
+
+                    if (strtolower($operator) == implode(" ", $ops)) {
+                        $found[] = $temp_operators;
+                        $attribute = $this->attributes[$ctr];
+
+                        if ($attribute['expr_type'] == 'const' && preg_match('/([\'"]?)' . $value . '\1/', strtolower($attribute['base_expr']))) {
+                            $found[] = $attribute;
+                            break;
+                        } else {
+                            $found = []; //Reset the found attributes
+                            $ctr++;
+                        }
                     } else {
-                        $found = []; //Reset the found attributes
+                        $found = [];
                         $ctr++;
                     }
                 } else {
