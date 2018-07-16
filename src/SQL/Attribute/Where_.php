@@ -2,79 +2,33 @@
 
 namespace CodingAvenue\Proof\SQL\Attribute;
 
+use CodingAvenue\Proof\SQL\Attribute\WhereOperator\OperatorFactory;
+use CodingAvenue\Proof\SQL\WhereNodes\WhereNodes;
+
 class Where_
 {
-    public function __construct(array $attributes)
+    public function __construct(array $nodes)
     {
-        $this->attributes = $attributes;
+        $this->nodes = $nodes;
     }
 
     /**
      * $attributes param is an array with key columns, operator and
      */
-    public function find(array $attributes)
+    public function find(array $filter)
     {
-        $found = [];
-        $ctr = 0;
+        //$less = new Less($this->nodes);
+        //$less->find($attributes);
 
-        $column = $attributes['columns'][0];
-        $operator = $attributes['operator'][0];
-        $value = strtolower($attributes['value'][0]);
+        $operatorClass = OperatorFactory::getOperator($filter['operator'][0]);
 
-        while ($ctr < count($this->attributes)) {
-            $attribute = $this->attributes[$ctr];
-
-            if ($attribute['expr_type'] == 'colref' && $attribute['base_expr'] == $column) {
-                $found[] = $attribute;
-                $ctr++;
-
-                $temp_operators = [];
-                while($ctr < count($this->attributes)) { // Searching for an operator may need one or more attributes.
-                    $attribute = $this->attributes[$ctr];
-
-                    if ($attribute['expr_type'] == 'operator') {
-                        $temp_operators[] = $attribute;
-                        $ctr++;
-                        continue;
-                    }
-
-                    break;
-                }
-                if (count($temp_operators) > 0) {
-                    $ops = array_map(function($att) {
-                        return strtolower($att['base_expr']);
-                    }, $temp_operators);
-
-                    if (strtolower($operator) == implode(" ", $ops)) {
-                        $found[] = $temp_operators;
-                        $attribute = $this->attributes[$ctr];
-
-                        if ($attribute['expr_type'] == 'const' && preg_match('/([\'"]?)' . $value . '\1/', strtolower($attribute['base_expr']))) {
-                            $found[] = $attribute;
-                            break;
-                        } else {
-                            $found = []; //Reset the found attributes
-                            $ctr++;
-                        }
-                    } else {
-                        $found = [];
-                        $ctr++;
-                    }
-                } else {
-                    $found = [];
-                    $ctr++;
-                }
-            } else {
-                $found = [];
-                $ctr++;
-            }
-        }
-
-        return $found;
+        $operator = new $operatorClass($this->nodes);
+        $filterNodes = $operator->find($filter);
+        return new WhereNodes($filterNodes);
     }
 
     public function knownAttributes()
     {
-        return array('columns', 'operator', 'value');
+        return array('operator');
     }
 }

@@ -52,7 +52,7 @@ class SQL
      * @return Array the array of nodes after the filter has been applied.
      * if no nodes are found, it will return an empty array. 
      */
-    public function find(string $selector): array
+    public function find(string $selector)
     {
         return $this->finder->find($selector);
     }

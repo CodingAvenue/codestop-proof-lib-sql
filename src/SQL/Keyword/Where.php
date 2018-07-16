@@ -28,7 +28,7 @@ class Where
                 }
             }
 
-            return $this->normalize($whereAttribute->find($attributes));
+            return $whereAttribute->find($attributes);
         }
     }
 
@@ -48,7 +48,15 @@ class Where
                 $operator = array_shift($part);
                 $value = array_shift($part);
 
-                $normalize[] = [$column, $operator, $value];
+                if (strtolower($operator['base_expr']) == 'between') {
+                    $and = array_shift($part);
+                    $val = array_shift($parth);
+
+                    $normalize[] = [$column, $operator, $value, $and, $val];
+                } else {
+
+                    $normalize[] = [$column, $operator, $value];
+                }
             }
         } else {
             // For now we only support a WHERE clause that is parsed into 3 element array.

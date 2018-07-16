@@ -33,7 +33,7 @@ class Finder
      * @return Array, an array of nodes after the filter has been applied
      * to the parsed SQL string.
      */
-    public function find(string $rawSelector): array
+    public function find(string $rawSelector)
     {
         $selector = $this->parseSelector($rawSelector);
 
