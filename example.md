@@ -10,7 +10,9 @@ $where->find('filter[type="column", value="foo"]'); // Will match the "<" operat
 
 $where->find('filter[type="const", value="1"]'); // Will match the "<" operator if the right hand of the operator is a constant 1.
 
-$where->find('where[operator="between"]'); //
+$where = $sql->find('where[operator="between"]'); // Will match "between" operator.
+
+$where->find('filter[type="range", start="1", end="3"]'); // Will match between range from 1 - 3.
 ```
 
 ### Supported WHERE operators
