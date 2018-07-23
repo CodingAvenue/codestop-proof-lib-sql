@@ -6,5 +6,6 @@ use CodingAvenue\Proof\SQL;
 
 $sql = new SQL('./code');
 
-$op = $sql->find('where[operator="between"]');
-$re = $op->find('filter[type="range", start="2010-01-01", end="2010-12-30"]');
+$select = $sql->find('where[operator="between"]');
+$bet = $select->find('filter[type="column", value="basr"]');
+print_r($bet);

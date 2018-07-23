@@ -59,3 +59,9 @@ $sql->find("FROM");
 
 $sql->find("FROM[table='foo']");
 ```
+
+### INSERT keyword
+
+```php
+$sql->find('INSERT');
+```

@@ -1,6 +1,32 @@
-## Where clause update
+## INSERT
 
 ```sql
+INSERT INTO employee_records
+VALUES 
+    ('Michael Ruiz', 'Javascript Developer', 'San Francisco', '2009/09/15', 205500),
+    ('John', 'Javascript Developer', 'LA', '2008/09/15', 205000),
+    ('John', 'Javascript Developer', NULL, '2008/09/15', 205000);
+```
+
+```php
+$sql = new SQL('./code');
+
+// TO get the INSERT CLAUSE
+$insert = $sql->find('INSERT');
+
+// TO get the INSERT CLAUSE WITH SPECIFIC TABLE
+$insert = $sql->find('INSERT[table="emploee_records"]');
+
+// To GET the VALUES clause
+$values = $sql->find('VALUES');
+
+// To get the values clause with specific data
+$values = $sql->find('VALUES[data="la"]'); // data attribute is case insensitive, `la` and `LA` will match the same record.
+```
+
+## Where clause update
+
+```php
 $sql = new SQL('./code');
 
 $where = $sql->find('where[operator="<"]'); // Will match all where clause with a '<' operator.
@@ -12,6 +38,7 @@ $where->find('filter[type="const", value="1"]'); // Will match the "<" operator 
 
 $where = $sql->find('where[operator="between"]'); // Will match "between" operator.
 
+$where->find('filter[type="column", value="foo"]'); // WIll match the foo column used by the between operator.
 $where->find('filter[type="range", start="1", end="3"]'); // Will match between range from 1 - 3.
 ```
 

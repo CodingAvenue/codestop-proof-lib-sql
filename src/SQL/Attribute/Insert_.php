@@ -13,7 +13,7 @@ class Insert_
     {
         $found = [];
         foreach ($this->attributes as $attribute) {
-            if ($attribute['expr_type'] == 'reserved' && $attribute['base_expr'] == $needle) {
+            if ($attribute['expr_type'] == 'table' && $attribute['base_expr'] == $needle) {
                 $found[] = $attribute;
             }
         }
@@ -23,6 +23,6 @@ class Insert_
 
     public function knownAttributes()
     {
-        return array('reserved');
+        return array('table');
     }
 }
