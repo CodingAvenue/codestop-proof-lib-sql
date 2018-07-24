@@ -6,6 +6,5 @@ use CodingAvenue\Proof\SQL;
 
 $sql = new SQL('./code');
 
-$select = $sql->find('where[operator="between"]');
-$bet = $select->find('filter[type="column", value="basr"]');
-print_r($bet);
+$insert = $sql->find('INSERT[table="employee_records"]');
+print_r($sql);

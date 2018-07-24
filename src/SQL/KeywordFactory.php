@@ -45,7 +45,9 @@ class KeywordFactory
             'FROM'      => '\CodingAvenue\Proof\SQL\Keyword\From',
             'INSERT'    => '\CodingAvenue\Proof\SQL\Keyword\Insert',
             'WHERE'    => '\CodingAvenue\Proof\SQL\Keyword\Where',
-            'VALUES'    => '\CodingAvenue\Proof\SQL\Keyword\Values'
+            'VALUES'    => '\CodingAvenue\Proof\SQL\Keyword\Values',
+            'UPDATE'    => '\CodingAvenue\Proof\SQL\Keyword\Update',
+            'SET'       => '\CodingAvenue\Proof\SQL\Keyword\Set'
         );
     }
 }

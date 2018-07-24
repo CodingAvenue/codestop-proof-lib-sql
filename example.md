@@ -24,6 +24,44 @@ $values = $sql->find('VALUES');
 $values = $sql->find('VALUES[data="la"]'); // data attribute is case insensitive, `la` and `LA` will match the same record.
 ```
 
+## UPDATE
+
+```sql
+UPDATE foo SET bar = 'baz';
+```
+
+```php
+$sql = new SQL('./code');
+
+// Get the UPDATE clause
+$update = $sql->find('UPDATE');
+// Get the UPDATE clause that uses the foo table. Matches the query above.
+$update = $sql->find('UPDATE[table="foo"]');
+
+// Get the SET clause.
+$set = $sql->find('SET');
+// Will match the set cause above also.
+$set = $sql->find('SET[column="bar", value="baz"]'); 
+
+// WHERE clause follows the WHERE clause below.
+```
+
+## DELETE
+
+```sql
+DELETE from foo WHERE bar = 'baz';
+```
+
+```php
+$sql = new SQL('./code');
+
+// Get the DELETE clause. If it returns anything, then the query has a DELETE clause on it.
+$delete = $sql->find('DELETE');
+
+// FROM clause of DELETE is the same with the other FROM CLAUSE.
+// WHERE clause of DELETE is the same with the other WHERE CLAUSE.
+```
+
 ## Where clause update
 
 ```php
