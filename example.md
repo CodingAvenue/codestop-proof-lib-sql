@@ -62,7 +62,7 @@ $delete = $sql->find('DELETE');
 // WHERE clause of DELETE is the same with the other WHERE CLAUSE.
 ```
 
-## Where clause update
+## WHERE
 
 ```php
 $sql = new SQL('./code');

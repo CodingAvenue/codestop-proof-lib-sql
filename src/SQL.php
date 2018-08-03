@@ -5,6 +5,8 @@ namespace CodingAvenue\Proof;
 use CodingAvenue\Proof\Config;
 use CodingAvenue\Proof\BinFinder;
 use CodingAvenue\Proof\SQL\Finder;
+use CodingAvenue\Proof\SQL\Parser\SQLParser;
+use CodingAvenue\Proof\SQL\Nodes;
 
 /**
  * SQL class of the Proof Library
@@ -19,10 +21,11 @@ class SQL
     /** @var BinFinder $binFinder the BinFinder instance */
     private $binFinder;
 
-    /** @var Finder $finder the SQL Finder instance */
-    private $finder;
+    /** @var Nodes $nodes the Nodes instance */
+    private $nodes;
 
-    private $query;
+    /** @var string $query the query to be analyze */
+
 
     public function __construct(string $answerFile)
     {
@@ -39,7 +42,8 @@ class SQL
 
         $this->query = $query;
 
-        $this->finder = new Finder($query);
+        $parser = new SQLParser();
+        $this->nodes = new Nodes($parser->parse($query));
 
         $this->binFinder = new BinFinder($this->config);
     }
@@ -54,7 +58,7 @@ class SQL
      */
     public function find(string $selector)
     {
-        return $this->finder->find($selector);
+        return $this->nodes->find($selector);
     }
 
     /**
@@ -68,5 +72,10 @@ class SQL
     public function getQuery()
     {
         return $this->query;
+    }
+
+    public function getNodes()
+    {
+        return $this->nodes;
     }
 }

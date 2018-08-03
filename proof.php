@@ -6,5 +6,5 @@ use CodingAvenue\Proof\SQL;
 
 $sql = new SQL('./code');
 
-$insert = $sql->find('INSERT[table="employee_records"]');
-print_r($sql);
+$ins = $sql->find('INSERT');
+print_r($ins);
