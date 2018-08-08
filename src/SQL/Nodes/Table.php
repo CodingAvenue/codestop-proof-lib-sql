@@ -9,7 +9,7 @@ class Table extends Node
         return $this->nodes['name'];
     }
 
-    public function hasPrimaryKey(): boolean
+    public function hasPrimaryKey(): bool
     {
         return isset($this->nodes['primaryKey']);
     }
