@@ -24,7 +24,7 @@ class Table extends Rule implements RuleInterface
                 )
                 && (
                     isset($filter['primaryKey'])
-                        ? $node->hasPrimaryKeyColumn() && $node->getPrimaryKeyColumn() == $filter['primaryKey'][0]
+                        ? $node->hasPrimaryKey() && $node->getPrimaryKeyColumn() == $filter['primaryKey'][0]
                         : true
                 )
                 && (

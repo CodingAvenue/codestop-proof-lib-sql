@@ -10,42 +10,44 @@ class SetParser
     public function parse(array $attributes = array())
     {
         $nodes = array();
-        //$binaryMode = false;
 
         foreach ($attributes as $attribute) {
-            $setNode = $attribute['sub_tree'];
+            $setNodes = $attribute['sub_tree'];
 
-            $handles = false;
-            foreach ($this->operatorParsers() as $parserClass) {
-                $parser = new $parserClass($setNode);
+            while (count($setNodes) > 0) {
+                $handles = false;
 
-                $node = $parser->parse();
-            
-                if (!is_null($node)) {
-                    $handles = true;
-                    $attributes = $parser->getAttributes(); // $attributes is the rest of the attributes that this operator cannot parse.
+                foreach ($this->operatorParsers() as $parserClass) {
+                    $parser = new $parserClass($setNodes);
 
-                    if (in_array(get_class($node), $this->getArithmeticClass())) {
-                        list($prev) = array_splice($nodes, -1, 1);
-                        $right = $prev->getRight();
+                    $node = $parser->parse();
+                
+                    if (!is_null($node)) {
+                        $handles = true;
+                        $setNodes = $parser->getAttributes(); // $attributes is the rest of the attributes that this operator cannot parse.
 
-                        $node->setLeft($right);
-                        $prev->setRight($node);
+                        if (in_array(get_class($node), $this->getArithmeticClass())) {
+                            list($prev) = array_splice($nodes, -1, 1);
+                            $right = $prev->getRight();
 
-                        $nodes[] = $prev;
+                            $node->setLeft($right);
+                            $prev->setRight($node);
+
+                            $nodes[] = $prev;
+
+                            break;
+                        }
+
+                        $nodes[] = $node; // $node is now an operator instance.
 
                         break;
                     }
-
-                    $nodes[] = $node; // $node is now an operator instance.
-
-                    break;
                 }
-            }
 
-            if (!$handles) {
-                print_r($attributes);
-                throw new \Exception("Unable to find an operator parser for this Set clause");
+                if (!$handles) {
+                    print_r($attributes);
+                    throw new \Exception("Unable to find an operator parser for this Set clause");
+                }
             }
         }
 
