@@ -42,7 +42,8 @@ class RuleFactory
             'between'       => '\CodingAvenue\Proof\SQL\Rule\Operator\Between',
             'and'           => '\CodingAvenue\Proof\SQL\Rule\Operator\And_',
             'or'            => '\CodingAvenue\Proof\SQL\Rule\Operator\Or_',
-            'plus'          => '\CodingAvenue\Proof\SQL\Rule\Operator\Plus_'
+            'plus'          => '\CodingAvenue\Proof\SQL\Rule\Operator\Plus_',
+            'minus'          => '\CodingAvenue\Proof\SQL\Rule\Operator\Minus_'
         );
     }
 }

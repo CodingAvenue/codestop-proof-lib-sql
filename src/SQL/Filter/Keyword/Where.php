@@ -56,7 +56,8 @@ class Where extends Filter implements FilterInterface
             'and' => 'and',
             'or'  => 'or',
             'between' => 'between',
-            '+' => 'plus'
+            '+' => 'plus',
+            '-' => 'minus'
         );
     }
 }

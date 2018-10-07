@@ -128,7 +128,8 @@ $sql->find('UPDATE[table="foo"]'); // Will match UPDATE foo
 ```php
 $sql->find('SET'); // Will match SET syntax
 $sql->find('SET-OPERATOR[operator="=", column="bar", value="1"]'); // Will match SET bar = 1.
-$sql->find('SET-OPERATOR[operator="+", left="salar", right="1"'); // Will match SALARY + 1
+$sql->find('SET-OPERATOR[operator="+", left="salary", right="1"'); // Will match SALARY + 1
+$sql->find('SET-OPERATOR[operator="-", left="salary", right="1"'); // Will match SALARY - 1
 
 // If you want to check for something like SET salary = salary + 1
 

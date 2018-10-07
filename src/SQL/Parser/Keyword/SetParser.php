@@ -4,6 +4,7 @@ namespace CodingAvenue\Proof\SQL\Parser\Keyword;
 
 use CodingAvenue\Proof\SQL\Nodes\Set;
 use CodingAvenue\Proof\SQL\Operators\Plus_;
+use CodingAvenue\Proof\SQL\Operators\Minus_;
 
 class SetParser
 {
@@ -57,7 +58,8 @@ class SetParser
     public function getArithmeticClass()
     {
         return array(
-            Plus_::class
+            Plus_::class,
+            Minus_::class
         );
     }
 
@@ -76,7 +78,8 @@ class SetParser
             '\CodingAvenue\Proof\SQL\Parser\Keyword\Operators\BetweenParser',
             '\CodingAvenue\Proof\SQL\Parser\Keyword\Operators\AndParser',
             '\CodingAvenue\Proof\SQL\Parser\Keyword\Operators\OrParser',
-            '\CodingAvenue\Proof\SQL\Parser\Keyword\Operators\PlusParser'
+            '\CodingAvenue\Proof\SQL\Parser\Keyword\Operators\PlusParser',
+            '\CodingAvenue\Proof\SQL\Parser\Keyword\Operators\MinusParser'
         );
     }
 
