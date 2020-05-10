@@ -33,11 +33,26 @@ class Table extends Rule implements RuleInterface
                             array(
                                 'column' => $filter['column'][0],
                                 'type' => isset($filter['type']) ? $filter['type'][0] : null,
-                                'length' => isset($filter['length']) ? $filter['length'][0] : null
+                                'length' => isset($filter['length']) ? $filter['length'][0] : null,
+                                'default' => isset($filter['default']) ? $filter['default'][0]: null
                             )
                         )
                         : true
                             
+                )
+                && (
+                    isset($filter['reference'])
+                        ? $node->hasReferenceDef(
+                            array(
+                                'name' => $filter['reference'][0],
+                                'column' => isset($filter['constraintColumn']) ? $filter['constraintColumn'][0] : null,
+                                'table-ref' => isset($filter['constraintTableRef']) ? $filter['constraintTableRef'][0] : null,
+                                'table-column-ref' => isset($filter['constraintTableColumnRef']) ? $filter['constraintTableColumnRef'][0] : null,
+                                'delete-rule' => isset($filter['constraintDeleteRule']) ? $filter['constraintDeleteRule'][0] : null,
+                                'update-rule' => isset($filter['constraintUpdateRule']) ? $filter['constraintUpdateRule'][0] : null
+                            )
+                        )
+                        : true
                 )
             );
         };
@@ -45,6 +60,6 @@ class Table extends Rule implements RuleInterface
 
     public function allowedOptionalFilter()
     {   
-        return array('table', 'primaryKey', 'column', 'type', 'length');
+        return array('table', 'primaryKey', 'column', 'type', 'length', 'default', 'reference', 'constraintColumn', 'constraintTableRef', 'constraintTableColumnRef', 'constraintDeleteRule', 'constraintUpdateRule');
     }   
 }

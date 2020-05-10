@@ -9,8 +9,21 @@ class SelectParser
     public function parse(array $attributes = array())
     {
         $columns = array();
-        foreach ($attributes as $attribute) {
-            $columns[] = $attribute['base_expr'];
+        $hasReserved = false;
+        for ($i = 0; $i < count($attributes); $i++) {
+            $attribute = $attributes[$i];
+
+            if ($attribute['expr_type'] == 'reserved' && strtoupper($attribute['base_expr']) == 'DISTINCT') {
+                $i++;
+                $columns[] = [
+                    'name' => $attributes[$i]['base_expr'],
+                    'distinct' => 1
+                ];
+            } else {
+                $columns[] = [
+                    'name' => $attribute['base_expr']
+                ];
+            }
         }
 
         return new Select($columns);

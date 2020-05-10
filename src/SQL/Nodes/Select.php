@@ -4,6 +4,23 @@ namespace CodingAvenue\Proof\SQL\Nodes;
 
 class Select extends Node
 {
+    public function findColumn($columnName, $distinct)
+    {
+        $hasColumn = false;
+
+        foreach ($this->nodes as $column) {
+            if ($column['name'] == $columnName) {
+                $hasColumn = isset($distinct)
+                    ? isset($column['distinct'])
+                        ? $distinct == $column['distinct']
+                        : false
+                    : true;
+            }
+        }
+
+        return $hasColumn;
+    }
+
     public function hasColumns(array $columns)
     {
         $hasColumn = true;

@@ -37,6 +37,8 @@ $sql->find("SELECT");
 
 $sql->find("SELECT[columns='*']");
 $sql->find("SELECT[columns='foo']");
+// Find a distinct column
+$sql->find("SELECT[column='foo', distinct='1']");
 ```
 ### FROM keyword
 
@@ -96,6 +98,11 @@ $sql->find('VALUES[data="baz"]'); // Will match INSERT INTO foo VALUES(baz) synt
 ```php
 
 $sql->find("CREATE"); // Will match CREATE node of the CREATE TABLE syntax
+$sql->find("CREATE[column='foo']"); // Will match CREATE TABLE with column foo.
+// List of possible column related attributes of CREATE TABLE syntax.
+$sql->find("CREATE[column='foo', type='int', length='2', nullable='1', unique='1', default='10']")
+// List of possible reference related attributes of CREATE TABLE syntax.
+$sql->find("CREATE[reference='fk_department_id', constraintColumn='department_id', constraintTableRef='department', constraintTableColumnRef='id', constraintDeleteRule='cascade', constraintUpdateRule='cascade']")
 ```
 
 ### TABLE
