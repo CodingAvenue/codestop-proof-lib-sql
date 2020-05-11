@@ -60,6 +60,6 @@ class Table extends Rule implements RuleInterface
 
     public function allowedOptionalFilter()
     {   
-        return array('table', 'primaryKey', 'column', 'type', 'length', 'default', 'reference', 'constraintColumn', 'constraintTableRef', 'constraintTableColumnRef', 'constraintDeleteRule', 'constraintUpdateRule');
+        return array('table', 'primaryKey', 'column', 'type', 'length', 'nullable', 'unique', 'default', 'reference', 'constraintColumn', 'constraintTableRef', 'constraintTableColumnRef', 'constraintDeleteRule', 'constraintUpdateRule');
     }   
 }
