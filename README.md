@@ -39,6 +39,12 @@ $sql->find("SELECT[columns='*']");
 $sql->find("SELECT[columns='foo']");
 // Find a distinct column
 $sql->find("SELECT[column='foo', distinct='1']");
+// Aggregate functions
+$sql->find("SELECT[column='foo', aggregate='SUM']"); // will match `select SUM(foo)`
+// alias
+$sql->find("SELECT[column='foo', alias='bar']"); // will match `SELECT foo as bar`
+// functions
+$sql->find("SELECT[column='foo', functionName='round']"); // will match `SELECT ROUND(foo)`
 ```
 ### FROM keyword
 

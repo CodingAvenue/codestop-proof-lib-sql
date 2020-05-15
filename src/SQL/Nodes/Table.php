@@ -27,7 +27,9 @@ class Table extends Node
             if ($this->hasColumnName($columnDef, $column)
                 && $this->hasDataType($columnDef, $column)
                 && $this->hasDataLength($columnDef, $column)
-                && $this->hasDefaultValue($columnDef, $column)) {
+                && $this->hasDefaultValue($columnDef, $column)
+                && $this->isNullable($columnDef, $column)
+                && $this->isUnique($columnDef, $column)) {
 
                     $hasColumnDef = true;
             }
@@ -87,6 +89,28 @@ class Table extends Node
                 ? isset($column['default'])
                     ? $columnDef['default'] == $column['default']
                     : false
+                : true
+        );
+    }
+
+    private function isNullable(array $columnDef, array $column): bool
+    {
+        return (
+            isset($columnDef['nullable'])
+                ? $column['nullable']
+                    ? $columnDef['nullable']
+                    : !$columnDef['nullable']
+                : true
+        );
+    }
+
+    private function isUnique(array $columnDef, array $column): bool
+    {
+        return (
+            isset($columnDef['unique'])
+                ? $column['unique']
+                    ? $columnDef['unique']
+                    : !$columnDef['unique']
                 : true
         );
     }

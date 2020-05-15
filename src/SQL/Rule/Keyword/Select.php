@@ -19,7 +19,15 @@ class Select extends Rule implements RuleInterface
                 $node instanceof $class
                 && (
                     isset($filter['column'])
-                        ? $node->findColumn($filter['column'][0], isset($filter['distinct']) ? $filter['distinct'][0] : null)
+                        ? $node->findColumn(
+                            $filter['column'][0],
+                            array(
+                                'distinct' => isset($filter['distinct']) ? $filter['distinct'][0] : null,
+                                'aggregate' => isset($filter['aggregate']) ? $filter['aggregate'][0] : null,
+                                'functionName' => isset($filter['functionName']) ? $filter['functionName'][0] : null,
+                                'alias' => isset($filter['alias']) ? $filter['alias'][0] : null
+                            )
+                        )
                         : true
                 )
             );
@@ -28,6 +36,6 @@ class Select extends Rule implements RuleInterface
 
     public function allowedOptionalFilter()
     {   
-        return array('columns', 'column', 'distinct');
+        return array('columns', 'column', 'distinct', 'aggregate', 'functionName', 'alias');
     }   
 }

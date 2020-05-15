@@ -34,7 +34,9 @@ class Table extends Rule implements RuleInterface
                                 'column' => $filter['column'][0],
                                 'type' => isset($filter['type']) ? $filter['type'][0] : null,
                                 'length' => isset($filter['length']) ? $filter['length'][0] : null,
-                                'default' => isset($filter['default']) ? $filter['default'][0]: null
+                                'default' => isset($filter['default']) ? $filter['default'][0]: null,
+                                'nullable' => isset($filter['nullable']) ? $filter['nullable'][0] : null,
+                                'unique' => isset($filter['unique']) ? $filter['unique'][0] : null
                             )
                         )
                         : true

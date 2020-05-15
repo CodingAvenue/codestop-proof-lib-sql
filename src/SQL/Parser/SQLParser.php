@@ -18,6 +18,7 @@ class SQLParser
     public function parse(string $sql)
     {
         $parsedSQL = $this->parser->parse($sql);
+        //print_r($parsedSQL);
 
         $nodes = array();
         foreach ($parsedSQL as $keyword => $attributes) {
